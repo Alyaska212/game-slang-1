@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Gamer's Codex | CS2 + Dota 2 — Сленг, Карты, Оружие, Герои</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0f0a;
+            background-image: radial-gradient(circle at 15% 30%, #0e1410 0%, #030603 100%);
+            font-family: 'Inter', sans-serif;
+            color: #d4e6d4;
+            line-height: 1.4;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a241a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6fbf6f;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* hero section - спокойные зеленые акценты */
+        .hero {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #b8f2b8, #6fbf6f, #3a8c3a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #9bbf9b;
+            margin-top: 0.75rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* категории навигации */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(111, 191, 111, 0.2);
+            padding-bottom: 0.5rem;
+        }
+        .cat-btn {
+            background: transparent;
+            border: none;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            color: #9bbf9b;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cat-btn i {
+            font-size: 1rem;
+        }
+        .cat-btn.active {
+            background: #2c5e2c;
+            color: #eaffea;
+            box-shadow: 0 6px 14px rgba(111, 191, 111, 0.25);
+            border: 1px solid #6fbf6f;
+        }
+        .cat-btn:not(.active):hover {
+            background: rgba(111, 191, 111, 0.15);
+            color: #c6f0c6;
+        }
+
+        /* вторичные фильтры (игра) */
+        .game-subtabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .subtab-btn {
+            background: rgba(30, 45, 30, 0.6);
+            border: 1px solid #2c4a2c;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #bbdfbb;
+        }
+        .subtab-btn.active-sub {
+            background: #2c5e2c;
+            border-color: #6fbf6f;
+            color: white;
+        }
+
+        /* поиск */
+        .search-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .search-box {
+            background: #0f150fcc;
+            backdrop-filter: blur(4px);
+            border: 1px solid #2c4a2c;
+            border-radius: 60px;
+            padding: 0.5rem 1rem 0.5rem 1.5rem;
+            display: flex;
+            width: 100%;
+            max-width: 480px;
+        }
+        .search-box i {
+            color: #6fbf6f;
+            font-size: 1.2rem;
+        }
+        .search-box input {
+            background: transparent;
+            border: none;
+            padding: 0.7rem 0.8rem;
+            font-size: 1rem;
+            width: 100%;
+            color: #e2f0e2;
+            outline: none;
+        }
+        .search-box input::placeholder {
+            color: #5a7a5a;
+        }
+
+        /* сетка карточек */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.6rem;
+            margin-top: 1rem;
+        }
+        .card {
+            background: rgba(20, 32, 20, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 1.2rem 1.3rem;
+            border: 1px solid rgba(111, 191, 111, 0.25);
+            transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #6fbf6f;
+            box-shadow: 0 12px 24px rgba(111, 191, 111, 0.15);
+            background: rgba(30, 48, 30, 0.8);
+        }
+        .term-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .item-name {
+            font-size: 1.65rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, #e2ffe2, #a8e6a8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .game-badge-sm {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.65rem;
+            border-radius: 40px;
+            background: #1e3a1e;
+        }
+        .game-badge-sm.cs {
+            background: #2c4a2c;
+            color: #a8f0a8;
+            border: 0.5px solid #6fbf6f;
+        }
+        .game-badge-sm.dota {
+            background: #2c4a2c;
+            color: #a8f0a8;
+            border: 0.5px solid #6fbf6f;
+        }
+        .game-badge-sm.general {
+            background: #2a3a2a;
+            color: #c0e0c0;
+            border: 0.5px solid #8fcb8f;
+        }
+        .description {
+            color: #cae5ca;
+            font-size: 0.95rem;
+            line-height: 1.45;
+            margin: 0.7rem 0;
+        }
+        .extra-info {
+            background: #0a140aaa;
+            padding: 0.6rem 0.8rem;
+            border-radius: 18px;
+            font-size: 0.8rem;
+            font-family: monospace;
+            color: #bce0bc;
+            margin-top: 0.6rem;
+            border-left: 3px solid #6fbf6f;
+        }
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 3rem;
+            background: #102010aa;
+            border-radius: 40px;
+            color: #9fcf9f;
+        }
+        footer {
+            margin-top: 3.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6f8f6f;
+            border-top: 1px solid #2c4a2c;
+            padding-top: 2rem;
+        }
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2rem; }
+            .item-name { font-size: 1.4rem; }
+            .container { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1><i class="fas fa-leaf"></i> GAMER'S CODEX</h1>
+        <p>Сленг, позиции на картах, оружие CS2, герои Dota 2 и ключевые фразы киберспорта</p>
+        <div style="margin-top: 12px; font-size: 0.9rem; color: #8fbc8f;">
+            <i class="fas fa-handshake"></i> GG | GLHF | WP — учи культуру игры
+        </div>
+    </div>
+
+    <!-- категории -->
+    <div class="category-tabs">
+        <button class="cat-btn active" data-category="slang"><i class="fas fa-comment-dots"></i> Сленг</button>
+        <button class="cat-btn" data-category="general"><i class="fas fa-globe"></i> Общие понятия</button>
+        <button class="cat-btn" data-category="maps"><i class="fas fa-map-marked-alt"></i> Позиции (CS2)</button>
+        <button class="cat-btn" data-category="weapons"><i class="fas fa-gun"></i> Оружие (CS2)</button>
+        <button class="cat-btn" data-category="heroes"><i class="fas fa-user-ninja"></i> Герои (Dota 2)</button>
+    </div>
+
+    <!-- фильтры по игре (только для сленга и общих понятий) -->
+    <div id="gameFilterContainer" style="display: flex; justify-content: center; margin-bottom: 1.2rem;">
+        <div class="game-subtabs" id="gameSubtabs">
+            <button class="subtab-btn active-sub" data-subgame="all">Все</button>
+            <button class="subtab-btn" data-subgame="cs2">Counter-Strike 2</button>
+            <button class="subtab-btn" data-subgame="dota2">Dota 2</button>
+            <button class="subtab-btn" data-subgame="general">Общие термины</button>
+        </div>
+    </div>
+
+    <div class="search-wrap">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearch" placeholder="Поиск: GG, раш, рошан, AWP, Pudge...">
+        </div>
+    </div>
+
+    <div id="cardsContainer" class="cards-grid">
+        <div class="no-results">Загрузка энциклопедии...</div>
+    </div>
+    <footer>
+        <i class="fas fa-heart" style="color:#6fbf6f;"></i> GG WP — играй вежливо, побеждай красиво.
+    </footer>
+</div>
+
+<script>
+    // ========== БАЗА ДАННЫХ ==========
+
+    // 1. СЛЕНГ (игровой, специфичный)
+    const slangData = [
+        { name: "Раш (Rush)", desc: "Стремительная атака на точку всей командой без промедления.", extra: "Пример: 'Раш Б, не останавливаемся!'", game: "cs2" },
+        { name: "Экок (Eco)", desc: "Раунд экономии, покупают только пистолеты или броню.", extra: "Пример: 'Эко раунд, берем P250.'", game: "cs2" },
+        { name: "Клатч (Clutch)", desc: "Победа в ситуации 1 против нескольких соперников.", extra: "Пример: 'Он сделал клатч 1v3!'", game: "cs2" },
+        { name: "ХС (Headshot)", desc: "Выстрел в голову, моментальное убийство.", extra: "Пример: 'Красивый хедшот с Deagle.'", game: "cs2" },
+        { name: "Пик (Peek)", desc: "Короткий выход из-за укрытия.", extra: "Пример: 'Не пикай в AWP.'", game: "cs2" },
+        { name: "Смок (Smoke)", desc: "Дымовая граната для закрытия обзора.", extra: "Пример: 'Засмокил лонг.'", game: "cs2" },
+        { name: "Флешка (Flash)", desc: "Светошумовая граната, ослепление.", extra: "Пример: 'Кидаю флеш под банку!'", game: "cs2" },
+        { name: "Дроп (Drop)", desc: "Сбросить оружие тиммейту.", extra: "Пример: 'Дропни M4, у меня 8к.'", game: "cs2" },
+        { name: "Рошан (Roshan)", desc: "Сильнейший нейтральный монстр в Dota, дает Aegis.", extra: "Пример: 'Забираем Рошана и пушим.'", game: "dota2" },
+        { name: "Ганк (Gank)", desc: "Скрытая атака на вражеского героя.", extra: "Пример: 'Ганкаю мид, поставь вард.'", game: "dota2" },
+        { name: "Керри (Carry)", desc: "Основной герой, фармит и наносит урон в лейте.", extra: "Пример: 'Керри фармит Battle Fury.'", game: "dota2" },
+        { name: "Саппорт (Support)", desc: "Вспомогательный герой, ставит варды, помогает.", extra: "Пример: 'Саппорт, купи варды.'", game: "dota2" },
+        { name: "БКБ (BKB)", desc: "Black King Bar — иммунитет к магии.", extra: "Пример: 'Купи БКБ, иначе задушат.'", game: "dota2" },
+        { name: "Денай (Deny)", desc: "Убийство своего крипа, чтобы враг не получил опыт.", extra: "Пример: 'Отличный денай на миде.'", game: "dota2" },
+        { name: "Фарм (Farm)", desc: "Добыча золота на крипах и нейтралах.", extra: "Пример: 'Фармлю лес, не зовите.'", game: "dota2" },
+        { name: "АФК (AFK)", desc: "Away From Keyboard — отошел от клавиатуры.", extra: "Актуально для всех игр.", game: "cs2" }
+    ];
+
+    // 2. ОБЩИЕ ПОНЯТИЯ (GG, GLHF и другие универсальные фразы)
+    const generalData = [
+        { name: "GG (Good Game)", desc: "Фраза вежливости в конце матча. Означает 'хорошая игра'.", extra: "Принято писать в чат после окончания матча, даже при поражении.", game: "general" },
+        { name: "GLHF (Good Luck Have Fun)", desc: "Приветствие перед началом матча. Пожелание удачи и хорошей игры.", extra: "Стандартный этикет в начале любого матча в CS2 и Dota 2.", game: "general" },
+        { name: "WP (Well Played)", desc: "Хорошо сыграно. Похвала тиммейту или сопернику.", extra: "Часто используют после красивого клатча или командной победы.", game: "general" },
+        { name: "HF (Have Fun)", desc: "Пожелание получать удовольствие от игры.", extra: "Короткая форма GLHF.", game: "general" },
+        { name: "BG (Bad Game)", desc: "Плохая игра. Используется редко, иногда в негативном контексте.", extra: "Лучше использовать GG даже при проигрыше.", game: "general" },
+        { name: "NT (Nice Try)", desc: "Хорошая попытка. Поддержка после неудачного раунда или попытки.", extra: "Важно для командного духа.", game: "general" },
+        { name: "GJ (Good Job)", desc: "Отличная работа. Похвала за успешное действие.", extra: "Пример: 'GJ, отлично зачистил точку!'", game: "general" },
+        { name: "EZ (Easy)", desc: "Легко. Иногда используется как токсичная фраза после легкой победы.", extra: "Лучше избегать, чтобы не провоцировать соперников.", game: "general" },
+        { name: "RE (Ready / Re)", desc: "Готов к игре / перезапуск.", extra: "В лобби часто пишут 're' после того, как кто-то перезаходит.", game: "general" },
+        { name: "GL (Good Luck)", desc: "Краткое пожелание удачи.", extra: "Можно сказать перед ключевым моментом.", game: "general" },
+        { name: "NS (Nice Shot)", desc: "Красивый выстрел. Похвала снайперу или точному попаданию.", extra: "Используется в CS2 и не только.", game: "general" },
+        { name: "GH (Good Half)", desc: "Хорошая половина. Отмечают завершение первой половины матча.", extra: "Актуально для CS2.", game: "general" },
+        { name: "FF (Forfeit / Fast Finish)", desc: "Сдаться / быстрая концовка.", extra: "В Dota 2 иногда пишут 'ff' при желании сдаться.", game: "general" }
+    ];
+
+    // 3. ПОЗИЦИИ НА КАРТАХ CS2
+    const mapsData = [
+        { name: "Mirage — Window", desc: "Окно на миду, ключевая позиция для снайпера.", extra: "Контроль window дает преимущество над мидом.", game: "cs2" },
+        { name: "Mirage — Jungle", desc: "Зона между коннектором и аппартаментами.", extra: "Важно для контроля середины карты.", game: "cs2" },
+        { name: "Mirage — Palace", desc: "Верхний выход на точку А, агрессивная позиция.", extra: "Из паласа удобно зачищать эй-сайт.", game: "cs2" },
+        { name: "Dust2 — Long", desc: "Длинная прямая на точку А, дуэльная зона.", extra: "Контроль Long важен для выхода на А.", game: "cs2" },
+        { name: "Dust2 — Cat (Кошка)", desc: "Короткий проход на А с мида.", extra: "Позиция для быстрого пика.", game: "cs2" },
+        { name: "Dust2 — B tunnels", desc: "Туннели под B сайтом, классический раш.", extra: "Ключевое место для захода на Б.", game: "cs2" },
+        { name: "Inferno — Banana", desc: "Основной проход на точку Б.", extra: "Контроль бананы — ключ к захвату B.", game: "cs2" },
+        { name: "Inferno — Apartments", desc: "Аппартаменты на точке А.", extra: "Позиция для пик-атак из окон.", game: "cs2" },
+        { name: "Nuke — Outside", desc: "Верхняя открытая зона.", extra: "Важная позиция для снайперов.", game: "cs2" },
+        { name: "Ancient — Cave", desc: "Пещера, соединяющая мид с точкой А.", extra: "Неожиданные фланги.", game: "cs2" }
+    ];
+
+    // 4. ОРУЖИЕ CS2
+    const weaponsData = [
+        { name: "AK-47", desc: "Основное оружие террористов. Хедшот с 1 пули.", extra: "Любимый выбор профессионалов.", game: "cs2" },
+        { name: "M4A4 / M4A1-S", desc: "Штурмовая винтовка спецназа. Точность.", extra: "M4A1-S имеет глушитель.", game: "cs2" },
+        { name: "AWP", desc: "Снайперская винтовка, убивает с одного выстрела в тело.", extra: "Стоимость 4750$, ключевой инструмент.", game: "cs2" },
+        { name: "Desert Eagle (Deagle)", desc: "Мощный пистолет, хедшот с одного выстрела.", extra: "Требует высокой точности.", game: "cs2" },
+        { name: "USP-S", desc: "Стартовый пистолет спецназа с глушителем.", extra: "Идеален для пистолетных раундов.", game: "cs2" },
+        { name: "Glock-18", desc: "Стандартный пистолет террористов.", extra: "Бурст-режим для ближнего боя.", game: "cs2" },
+        { name: "MAC-10 / MP9", desc: "Пистолеты-пулеметы для анти-эко.", extra: "Высокая мобильность.", game: "cs2" },
+        { name: "SSG 08 (Scout)", desc: "Легкая снайперка, быстрая.", extra: "Высокая точность в прыжке.", game: "cs2" }
+    ];
+
+    // 5. ГЕРОИ DOTA 2
+    const heroesData = [
+        { name: "Pudge", desc: "Мясной крюк — культовый герой.", extra: "Роль: роумер/саппорт. Любимец сообщества.", game: "dota2" },
+        { name: "Invoker", desc: "Маг с 10 заклинаниями, высокий скилл.", extra: "Роль: мидер, сложный для освоения.", game: "dota2" },
+        { name: "Phantom Assassin (PA)", desc: "Керри с критическими ударами.", extra: "Поздняя игра — машина убийств.", game: "dota2" },
+        { name: "Juggernaut", desc: "Универсальный керри с иммунитетом к магии.", extra: "Blade Fury и Omnislash — ключевые скиллы.", game: "dota2" },
+        { name: "Earthshaker", desc: "Саппорт/оффлейнер с мощным контролем.", extra: "Отличный инициатор драк.", game: "dota2" },
+        { name: "Crystal Maiden (CM)", desc: "Саппорт с глобальной аурой маны.", extra: "Лучший друг керри на лейне.", game: "dota2" },
+        { name: "Storm Spirit", desc: "Мобильный мидер, молнии.", extra: "Спирит — король ганков.", game: "dota2" },
+        { name: "Axe", desc: "Оффлейнер, провоцирует врагов.", extra: "Culling Blade — фирменный скилл.", game: "dota2" },
+        { name: "Sniper", desc: "Дальнобойный керри.", extra: "Хорош для новичков.", game: "dota2" },
+        { name: "Rubick", desc: "Маг-саппорт, крадет ульты.", extra: "Креативный герой.", game: "dota2" }
+    ];
+
+    let currentCategory = "slang";
+    let currentSubGame = "all";     // all, cs2, dota2, general (для сленга и общих)
+    let searchQuery = "";
+
+    const cardsContainer = document.getElementById("cardsContainer");
+    const gameFilterDiv = document.getElementById("gameFilterContainer");
+    const searchInput = document.getElementById("globalSearch");
+
+    function getCurrentData() {
+        let rawData = [];
+        if (currentCategory === "slang") rawData = [...slangData];
+        else if (currentCategory === "general") rawData = [...generalData];
+        else if (currentCategory === "maps") rawData = [...mapsData];
+        else if (currentCategory === "weapons") rawData = [...weaponsData];
+        else if (currentCategory === "heroes") rawData = [...heroesData];
+
+        // фильтр по игре для категорий, где есть подкатегории
+        if (currentCategory === "slang") {
+            if (currentSubGame === "cs2") rawData = rawData.filter(item => item.game === "cs2");
+            else if (currentSubGame === "dota2") rawData = rawData.filter(item => item.game === "dota2");
+            else if (currentSubGame === "general") rawData = []; // slang не показывает общие, только cs/dota
+            // all — оставляем всё
+        } 
+        else if (currentCategory === "general") {
+            if (currentSubGame === "general") rawData = rawData.filter(item => item.game === "general");
+            else if (currentSubGame === "all") rawData = rawData; // все общие термины
+            else rawData = []; // в общих понятиях нет cs2/dota2 специфики
+        }
+        else if (currentCategory === "maps" || currentCategory === "weapons") {
+            rawData = rawData.filter(item => item.game === "cs2");
+        }
+        else if (currentCategory === "heroes") {
+            rawData = rawData.filter(item => item.game === "dota2");
+        }
+
+        // поиск
+        if (searchQuery.trim() !== "") {
+            const query = searchQuery.trim().toLowerCase();
+            rawData = rawData.filter(item => 
+                item.name.toLowerCase().includes(query) || 
+                item.desc.toLowerCase().includes(query) ||
+                (item.extra && item.extra.toLowerCase().includes(query))
+            );
+        }
+        return rawData;
+    }
+
+    function renderCards() {
+        const data = getCurrentData();
+        if (!data.length) {
+            cardsContainer.innerHTML = `<div class="no-results"><i class="fas fa-leaf"></i> Ничего не найдено. Попробуйте другой поиск или категорию.</div>`;
+            return;
+        }
+
+        let html = "";
+        data.forEach(item => {
+            let gameClass = "general";
+            let gameIcon = '<i class="fas fa-smile"></i>';
+            let gameName = "Общее";
+
+            if (item.game === "cs2") {
+                gameClass = "cs";
+                gameIcon = '<i class="fas fa-crosshairs"></i>';
+                gameName = "CS2";
+            } else if (item.game === "dota2") {
+                gameClass = "dota";
+                gameIcon = '<i class="fas fa-dragon"></i>';
+                gameName = "Dota 2";
+            } else if (item.game === "general") {
+                gameClass = "general";
+                gameIcon = '<i class="fas fa-handshake"></i>';
+                gameName = "Общий этикет";
+            }
+
+            html += `
+                <div class="card">
+                    <div class="term-header">
+                        <div class="item-name">${escapeHtml(item.name)}</div>
+                        <div class="game-badge-sm ${gameClass}">${gameIcon} ${gameName}</div>
+                    </div>
+                    <div class="description">📖 ${escapeHtml(item.desc)}</div>
+                    <div class="extra-info"><i class="fas fa-comment"></i> ${escapeHtml(item.extra)}</div>
+                </div>
+            `;
+        });
+        cardsContainer.innerHTML = html;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function updateGameFilterVisibility() {
+        if (currentCategory === "slang" || currentCategory === "general") {
+            gameFilterDiv.style.display = "flex";
+            // обновить активную кнопку субфильтра
+            document.querySelectorAll('.subtab-btn').forEach(btn => {
+                if (btn.getAttribute('data-subgame') === currentSubGame) {
+                    btn.classList.add('active-sub');
+                } else {
+                    btn.classList.remove('active-sub');
+                }
+            });
+        } else {
+            gameFilterDiv.style.display = "none";
+        }
+    }
+
+    function setActiveCategory(category) {
+        currentCategory = category;
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            if (btn.getAttribute('data-category') === category) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        // сброс subgame на all при смене категории для корректного отображения
+        if (category === "general") {
+            currentSubGame = "all";
+        } else if (category === "slang") {
+            currentSubGame = "all";
+        }
+        updateGameFilterVisibility();
+        renderCards();
+    }
+
+    function setActiveSubGame(subgame) {
+        currentSubGame = subgame;
+        renderCards();
+        // обновить активный стиль кнопок
+        document.querySelectorAll('.subtab-btn').forEach(btn => {
+            if (btn.getAttribute('data-subgame') === subgame) {
+                btn.classList.add('active-sub');
+            } else {
+                btn.classList.remove('active-sub');
+            }
+        });
+    }
+
+    // события
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            setActiveCategory(btn.getAttribute('data-category'));
+        });
+    });
+
+    document.querySelectorAll('.subtab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            setActiveSubGame(btn.getAttribute('data-subgame'));
+        });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        renderCards();
+    });
+
+    // инициализация
+    setActiveCategory("slang");
+    setActiveSubGame("all");
+    renderCards();
+</script>
+</body>
+</html>
